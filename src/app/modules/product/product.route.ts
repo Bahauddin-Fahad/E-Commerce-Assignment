@@ -12,5 +12,5 @@ router
   .get(ProductControllers.getSingleProduct)
   .put(ProductControllers.updateSingleProduct)
   .delete(ProductControllers.deleteProduct);
-router.route('/?searchItem').get(ProductControllers.getProducts);
+
 export const ProductRoutes = router;

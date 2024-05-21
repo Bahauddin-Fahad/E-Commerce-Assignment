@@ -10,23 +10,25 @@ const addProduct = async (req: Request, res: Response) => {
 
     res.status(200).send({
       success: true,
-      message: 'Product added successfully',
+      message: 'Product created successfully!',
       data: result,
     });
   } catch (error) {
     res.status(500).send({
       success: false,
-      message: 'Could not add product',
+      message: 'Could not create product',
       error,
     });
   }
 };
+
 const getProducts = async (req: Request, res: Response) => {
   try {
-    const products = await ProductServices.getAllProductsFromDB();
+    const searchTerm: any = req.query.searchTerm;
+    const products = await ProductServices.getAllProductsFromDB(searchTerm);
     res.status(200).send({
       success: true,
-      message: 'Product fetched successfully',
+      message: 'Products fetched successfully',
       data: products,
     });
   } catch (error) {
@@ -37,6 +39,7 @@ const getProducts = async (req: Request, res: Response) => {
     });
   }
 };
+
 const getSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
@@ -54,18 +57,20 @@ const getSingleProduct = async (req: Request, res: Response) => {
     });
   }
 };
+
 const updateSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
     const productData = req.body;
-    const product = await ProductServices.updateSingleProductInDB(
+    const result = await ProductServices.updateSingleProductInDB(
       productId,
       productData,
     );
+
     res.status(200).send({
       success: true,
       message: 'Product updated successfully',
-      data: product,
+      data: result,
     });
   } catch (error) {
     res.status(500).send({
@@ -75,6 +80,7 @@ const updateSingleProduct = async (req: Request, res: Response) => {
     });
   }
 };
+
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
