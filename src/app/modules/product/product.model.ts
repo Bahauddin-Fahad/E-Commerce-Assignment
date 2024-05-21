@@ -1,5 +1,6 @@
 import { Schema, model } from 'mongoose';
 import {
+  ProductModel,
   TProduct,
   TProductInventory,
   TProductVariant,
@@ -23,4 +24,12 @@ const productSchema = new Schema<TProduct>({
   inventory: { type: productInventorySchema, required: true },
 });
 
-export const ModelProduct = model<TProduct>('Product', productSchema);
+productSchema.statics.doesProductExists = async function (id: string) {
+  const existingProduct = await ModelProduct.findOne({ _id: id });
+  return existingProduct;
+};
+
+export const ModelProduct = model<TProduct, ProductModel>(
+  'Product',
+  productSchema,
+);

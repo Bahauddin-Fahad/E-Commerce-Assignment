@@ -15,8 +15,8 @@ const getAllProductsFromDB = async (searchTerm?: string) => {
 };
 
 const getSingleProductFromDB = async (productId: string) => {
-  const products = await ModelProduct.findOne({ _id: productId });
-  return products;
+  const product = ModelProduct.doesProductExists(productId);
+  return product;
 };
 
 const updateSingleProductInDB = async (
