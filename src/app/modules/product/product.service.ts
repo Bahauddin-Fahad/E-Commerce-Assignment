@@ -23,18 +23,37 @@ const updateSingleProductInDB = async (
   productId: string,
   productData: object,
 ) => {
+  if (!(await ModelProduct.doesProductExists(productId))) {
+    return {
+      success: false,
+      message: 'Product not found',
+    };
+  }
   const result = await ModelProduct.findOneAndUpdate(
     { _id: productId },
     productData,
     { new: true },
   );
 
-  return result;
+  return {
+    success: true,
+    message: 'Product updated successfully',
+    data: result,
+  };
 };
 
 const deleteProductFromDB = async (productId: string) => {
-  const result = await ModelProduct.deleteOne({ _id: productId });
-  return result;
+  if (!(await ModelProduct.doesProductExists(productId))) {
+    return {
+      success: false,
+      message: 'Product not found',
+    };
+  }
+  await ModelProduct.deleteOne({ _id: productId });
+  return {
+    success: true,
+    message: 'Product deleted successfully',
+  };
 };
 
 export const ProductServices = {

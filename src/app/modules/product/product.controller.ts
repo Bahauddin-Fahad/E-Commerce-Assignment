@@ -1,7 +1,6 @@
 import { Request, Response } from 'express';
 import ProductZodSchema from './product.zod';
 import { ProductServices } from './product.service';
-import { ModelProduct } from './product.model';
 
 const addProduct = async (req: Request, res: Response) => {
   try {
@@ -77,23 +76,13 @@ const updateSingleProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
 
-    if (!(await ModelProduct.doesProductExists(productId))) {
-      return res.status(404).send({
-        success: false,
-        message: 'Product not found',
-      });
-    }
     const productData = req.body;
     const result = await ProductServices.updateSingleProductInDB(
       productId,
       productData,
     );
 
-    res.status(200).send({
-      success: true,
-      message: 'Product updated successfully',
-      data: result,
-    });
+    res.status(200).send(result);
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error) {
     res.status(500).send({
@@ -107,17 +96,9 @@ const updateSingleProduct = async (req: Request, res: Response) => {
 const deleteProduct = async (req: Request, res: Response) => {
   try {
     const { productId } = req.params;
-    if (!(await ModelProduct.doesProductExists(productId))) {
-      return res.status(404).send({
-        success: false,
-        message: 'Product not found',
-      });
-    }
-    await ProductServices.deleteProductFromDB(productId);
-    res.status(200).send({
-      success: true,
-      message: 'Product deleted successfully',
-    });
+
+    const result = await ProductServices.deleteProductFromDB(productId);
+    res.status(200).send(result);
   } catch (error) {
     res.status(500).send({
       success: false,

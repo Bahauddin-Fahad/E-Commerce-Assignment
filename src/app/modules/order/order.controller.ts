@@ -9,11 +9,7 @@ const createOrder = async (req: Request, res: Response) => {
     const parsedOrderData = orderZODSchema.parse(orderData);
     const result = await OrderServices.createOrderInDB(parsedOrderData);
 
-    res.status(200).send({
-      success: true,
-      message: 'Order created successfully!',
-      data: result,
-    });
+    res.status(200).send(result);
   } catch (error) {
     res.status(500).send({
       success: false,
