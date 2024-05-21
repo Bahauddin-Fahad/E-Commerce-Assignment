@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
-import ProductZodSchema from './product.zod';
+import { zodValidation } from './product.zod';
 import { ProductServices } from './product.service';
 
 const addProduct = async (req: Request, res: Response) => {
   try {
     const productData = req.body;
-    const parsedproductData = ProductZodSchema.parse(productData);
+    const parsedproductData = zodValidation.ProductZodSchema.parse(productData);
     const result = await ProductServices.addProductToDB(parsedproductData);
 
     res.status(200).send({
@@ -77,9 +77,11 @@ const updateSingleProduct = async (req: Request, res: Response) => {
     const { productId } = req.params;
 
     const productData = req.body;
+    const parsedProductData =
+      zodValidation.ProductPartialZodSchema.parse(productData);
     const result = await ProductServices.updateSingleProductInDB(
       productId,
-      productData,
+      parsedProductData,
     );
 
     res.status(200).send(result);

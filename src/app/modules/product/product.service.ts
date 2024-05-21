@@ -34,7 +34,6 @@ const updateSingleProductInDB = async (
     productData,
     { new: true },
   );
-
   return {
     success: true,
     message: 'Product updated successfully',

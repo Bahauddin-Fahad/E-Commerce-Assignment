@@ -22,5 +22,8 @@ const ProductZodSchema = z.object({
   variants: z.array(ProductVariantZodSchema).nonempty(),
   inventory: ProductInventoryZodSchema.required(),
 });
-
-export default ProductZodSchema;
+const ProductPartialZodSchema = ProductZodSchema.partial();
+export const zodValidation = {
+  ProductZodSchema,
+  ProductPartialZodSchema,
+};

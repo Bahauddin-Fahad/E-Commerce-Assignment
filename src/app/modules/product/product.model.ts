@@ -32,8 +32,8 @@ productSchema.index({
   name: 'text',
   description: 'text',
   category: 'text',
-  tags: 'text',
 });
+
 export const ModelProduct = model<TProduct, ProductModel>(
   'Product',
   productSchema,
