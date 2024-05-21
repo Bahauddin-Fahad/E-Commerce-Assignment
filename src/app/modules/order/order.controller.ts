@@ -5,6 +5,7 @@ import { OrderServices } from './order.service';
 const createOrder = async (req: Request, res: Response) => {
   try {
     const orderData = req.body;
+
     const parsedOrderData = orderZODSchema.parse(orderData);
     const result = await OrderServices.createOrderInDB(parsedOrderData);
 

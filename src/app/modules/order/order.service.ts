@@ -3,6 +3,7 @@ import { ModelOrder } from './order.model';
 
 const createOrderInDB = async (orderData: TOrder) => {
   const result = await ModelOrder.create(orderData);
+
   return result;
 };
 const getAllOrdersFromDB = async (email: string) => {

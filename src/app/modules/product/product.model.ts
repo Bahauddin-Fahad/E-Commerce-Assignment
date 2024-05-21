@@ -28,7 +28,12 @@ productSchema.statics.doesProductExists = async function (id: string) {
   const existingProduct = await ModelProduct.findOne({ _id: id });
   return existingProduct;
 };
-
+productSchema.index({
+  name: 'text',
+  description: 'text',
+  category: 'text',
+  tags: 'text',
+});
 export const ModelProduct = model<TProduct, ProductModel>(
   'Product',
   productSchema,
