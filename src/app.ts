@@ -12,7 +12,7 @@ app.use('/api/products', ProductRoutes);
 app.use('/api/orders', OrderRoutes);
 
 app.get('/', (req: Request, res: Response) => {
-  res.send('');
+  res.send('E-commerce app Running Successfully');
 });
 app.get('*', function (req, res) {
   res.status(404).json({
